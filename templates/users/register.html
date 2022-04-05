@@ -1,0 +1,54 @@
+{% extends 'base_auth.html' %}
+{% load static %}
+{% block content %}
+
+<div class="row" style="margin-top: 5%;">
+    <div class="col col-md-4">
+    </div>
+    <div class="col col-md-4">
+        <div class="card">
+            <a href="/" class="" style="text-align: start;">&#8592; Back</a>
+            <div class="card-body">
+                <div class="card-title pb-2">
+                    <h2>Register for free account</h2>
+                    <hr>
+                </div>
+                <form method="post">
+                    {% csrf_token %}
+                    {% include 'partials/messages.html' %}
+
+                    <div class="mb-3">
+                        <input type="text" name="first_name" class="form-control" placeholder="First Name"
+                            value="{{ fieldvalues.first_name }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <input type="text" name="last_name" class="form-control" placeholder="Last Name"
+                            value="{{ fieldvalues.last_name }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <input type="email" name="email" class="form-control" placeholder="Email Address"
+                            id="EmailField" value="{{ fieldvalues.email }}" required>
+                    </div>
+                    <div class="emailFeedBackArea invalid-feedback" style="display:none">
+                        <p class="text-sm-start text-success EmailSuccessOutput"></p>
+                    </div>
+                    <div class="mb-3">
+                        <input type="password" name="password" class="form-control" placeholder="Password"
+                            id="PasswordField" required>
+                        <small class="float-end p-2 ShowPasswordToogle">SHOW</small>
+                    </div>
+                    <input type="submit" class="btn btn-block btn-primary submit-btn mt-2" style="width: 100%;" value="Register">
+                </form>
+                <div class="container mt-4 ms-4">
+                    <span class="">Already have an account?<a href="{% url 'users:login' %}">Login here</a></span><br>
+                  </div>
+            </div>
+            <div class="col col-md-4">
+            </div>
+
+        </div>
+
+    </div>                          
+</div>
+<script src="{% static 'js/register.js' %}"></script>
+{% endblock content %}

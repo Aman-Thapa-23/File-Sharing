@@ -1,0 +1,58 @@
+{% extends "base_auth_user.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+<style>
+    .avatar {
+        width: 200px;
+        height: 200px;
+    }
+</style>
+
+<div class="container mt-md-4">
+    <h1 class="text-primary">Your Profile</h1>
+    <hr>
+    <div class="row">
+        <!-- left column -->
+        <div class="col-md-3">
+            <div class="text-center">
+                <img src="{{ user.profile.image.url }}" class="avatar img-circle img-thumbnail" alt="">
+                <h3 class="card-title">{{ user.first_name }} {{user.last_name}}</h3>
+                <p class="text-secondary">{{ user.email }}</p>
+            </div>
+        </div>
+
+        <!-- edit form column -->
+        <div class="col-md-9 personal-info">
+            <h3>Personal info</h3>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {% include 'partials/messages.html' %}
+                <div class="form-group">
+                    <label class="col-lg-3 control-label" >First name:</label>
+                    <div class="col-lg-8">
+                        <input class="form-control" name="first_name" type="text" value="{{ u_form.instance.first_name }}" >
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">Last name:</label>
+                    <div class="col-lg-8">
+                        <input class="form-control" name="last_name" type="text" value="{{ u_form.instance.last_name }}">
+                    </div>
+                </div>
+                <fieldset class="form-group mt-4">
+                    <a class="btn btn-outline-primary" href="{% url 'users:password-change' %}">Change Password</a>
+                </fieldset><br>
+                <div class="form-group">
+                    <label for="">Profile Picture</label>
+                    <div class=" form-control">{{ p_form.image|as_crispy_field }}</div>
+                </div>
+                <div class="form-group mt-4">
+                    <button class="btn btn-outline-success" type="submit">Update</button>
+                    <a type="button" class="btn btn-outline-danger" href="{% url 'files:home' %}">close</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}

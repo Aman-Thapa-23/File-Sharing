@@ -1,0 +1,29 @@
+{% extends 'base_auth_user.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container mt-4">
+    <h3>Delete File</h3>
+    <nav aria-label="breadcrumb" style="background-color: lightgray;">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'files:home' %}">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Delete File</li>
+        </ol>
+    </nav>
+
+    <div class="card">
+        <div class="card mt-3">
+            <div class="card-body">
+                <form action="" method="post">
+                    {% csrf_token %}
+                    {% include 'partials/messages.html' %}
+                    <p>Do you want to remove this {{ file.title }}?</p>
+                    <input type="submit" class="btn btn-danger btn-sm" value="Yes, Delete">
+                    <a href="{% url 'files:home' %}" class="btn btn-info btn-sm">Cancel</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

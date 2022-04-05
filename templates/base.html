@@ -1,0 +1,163 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>File Spliter</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+  <link rel="stylesheet" href="{{% static 'css/main.css' %}">
+
+  <!-- Custom styles for this template -->
+  <link href="{% static 'css/dashboard.css' %}" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+
+
+</head>
+<style>
+  .carousel-images img{
+    margin-left: 20rem;
+    height: 25rem;
+  }
+  .carousel-image-two img{
+    margin-left: 25rem;
+    height: 25rem;
+  }
+  .carousel-image-three img{
+    margin-left: 28rem;
+    height: 25rem;
+  }
+</style>
+
+<body>
+  <header>
+    {% include 'navbar.html' %}
+  </header>
+
+  <main>
+    <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
+      <div class="carousel-indicators">
+        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active"
+          aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
+      </div>
+      <div class="carousel-inner">
+        <div class="carousel-item active" data-bs-interval="10000">
+          <div class="carousel-images">
+          <img src="{% static 'images/shareFile.png' %}" alt="...">
+          </div>
+          <div class="carousel-caption d-none d-md-block">
+            <h5>Share your files</h5>
+            <p>Share your files with others instantly.</p>
+          </div>
+        </div>
+        <div class="carousel-item" data-bs-interval="2000">
+          <div class="carousel-image-two">
+            <img src="{% static 'images/fileProtect.png' %}" alt="...">
+          </div>
+          <div class="carousel-caption d-none d-md-block">
+            <h5>Protect your files</h5>
+            <p>Protect your files by placing here.</p>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <div class="carousel-image-three">
+            <img src="{% static 'images/fileDownload.png' %}" alt="...">
+          </div>
+            <div class="carousel-caption d-none d-md-block">
+            <h5>View and download shared files</h5>
+            <p>View and downlaod files which have been shared.</p>
+          </div>
+        </div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+
+
+    <!-- Marketing messaging and featurettes
+  ================================================== -->
+    <!-- Wrap the rest of the page in another container to center all the content. -->
+
+    <div class="container marketing">
+
+      <!-- START THE FEATURETTES -->
+
+      <hr class="featurette-divider">
+
+      <div class="row featurette">
+        <div class="col-md-7">
+          <h2 class="featurette-heading">Share any files. <span class="text-muted">Whomever you want.</span></h2>
+          <p class="lead">Share your files safely with other instantly.</p>
+        </div>
+        <div class="col-md-5">
+          <img src="{% static 'images/FileShareImage.jpg' %}" alt="">
+        </div>
+      </div>
+
+      <hr class="featurette-divider">
+
+      <div class="row featurette">
+        <div class="col-md-7 order-md-2">
+          <h2 class="featurette-heading">Oh yeah, it’s that good. <span class="text-muted">To protect your files
+              safe.</span></h2>
+          <p class="lead">We can't take risk for sharing critical files with everyone without protect. So, here we are
+            for you.</p>
+        </div>
+        <div class="col-md-5 mt-md-5 order-md-1">
+          <img src="{% static 'images/ProtectFileSafely.png' %}" alt="">
+        </div>
+      </div>
+
+      <hr class="featurette-divider">
+
+      <div class="row featurette">
+        <div class="col-md-7">
+          <h2 class="featurette-heading">And View and Download. <span class="text-muted">Shared files.</span></h2>
+          <p class="lead">And yes, you just not only share your files but can view and downlaod the files which have
+            been shared to you.</p>
+        </div>
+        <div class="col-md-5 mt-md-5">
+          <img src="{% static 'images/FileDownloadImage.jpg' %}" alt="">
+        </div>
+      </div>
+
+      <hr class="featurette-divider">
+
+      <!-- /END THE FEATURETTES -->
+
+    </div><!-- /.container -->
+
+
+    <!-- FOOTER -->
+    <footer class="container">
+      {% include 'footer.html' %}
+    </footer>
+  </main>
+
+
+  <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js"
+    integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"
+    integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha"
+    crossorigin="anonymous"></script>
+
+</body>
+
+</html>

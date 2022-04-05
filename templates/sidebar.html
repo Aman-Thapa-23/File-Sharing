@@ -1,0 +1,35 @@
+<div class="d-flex flex-column flex-shrink-0 p-3 bg-light" style="width: 280px;">
+    <a href="{% url 'files:home' %}" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+      <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"/></svg>
+      <span class="fs-4">{{ user.first_name }} {{ user.last_name }}</span>
+    </a>
+    <hr>
+    <ul class="nav nav-pills flex-column mb-auto">
+      <li class="nav-item">
+        <a href="{% url 'files:home' %}" class="nav-link active" aria-current="page">
+          My Files
+        </a>
+      </li>
+      <li>
+        <a href="#" class="nav-link link-dark">
+          Shared Files
+        </a>
+      </li>
+      <li>
+        <a href="#" class="nav-link link-dark">
+          Downloaded Files
+        </a>
+      </li>
+    </ul>
+    <hr>
+    <div class="dropdown">
+      <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle" id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
+        <strong>Setting</strong>
+      </a>
+      <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
+        <li><a class="dropdown-item" href="{% url 'users:profile' %}">Profile</a></li>
+        <li><hr class="dropdown-divider"></li>
+        <li><a class="dropdown-item" href="{% url 'users:logout' %}">Sign out</a></li>
+      </ul>
+    </div>
+  </div>

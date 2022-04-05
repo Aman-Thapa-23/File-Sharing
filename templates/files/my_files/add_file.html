@@ -1,0 +1,38 @@
+{% extends 'base_auth_user.html' %}
+{% load static %}
+{% block content %}
+<div class="container mt-4">
+  <h3>Add File</h3>
+  <nav aria-label="breadcrumb" style="background-color: lightgray;">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'files:home' %}">Home</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Add File</li>
+    </ol>
+  </nav>
+
+
+  <div class="card">
+    <div class="card-body">
+      <form action="" method="post" enctype="multipart/form-data">
+        {% include 'partials/messages.html' %}
+        {% csrf_token %}
+        <div class="mb-3">
+          <label for="">File Title</label>
+          <input type="text" class="form-control" name="title" value="{{ values.title }}">
+        </div>
+        <div class="mb-3">
+          <label for="">Description</label>
+          <input type="text" class="form-control" name="description" value="{{ values.description}}">
+        </div>
+        <div class="mb-3">
+          <label for="">Upload File</label>
+          <input type="file" class="form-control" name="file_upload">
+        </div>
+        <input type="submit" value="Add File" class="btn btn-primary btn-primary-sm">
+        <a href="{% url 'files:home' %}" class="btn btn-danger ms-2">Cancel</a>
+      </form>
+    </div>
+
+  </div>
+</div>
+{% endblock content %}
