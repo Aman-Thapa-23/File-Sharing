@@ -1,8 +1,11 @@
+from msilib.schema import CustomAction
+from urllib import request
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views import View
 from django.contrib.auth.decorators import login_required
-from .models import FilePost
-from .forms import FileUploadForm
+from .models import FilePost,ShareFile
+from users.models import CustomUser
+from .forms import FileUploadForm,FileShareForm 
 from django.core.paginator import Paginator
 from django.contrib import messages
 from django.utils.decorators import method_decorator
@@ -95,3 +98,40 @@ class FileDeleteView(View):
             messages.success(request, 'File is successfully deleted')
             return redirect('files:home')
         return render(request, 'files/my_files/file_delete..html', context)
+
+
+def file_share(request,pk):
+    print("Inside file share")
+    share_form = FileShareForm()
+    file_instance = get_object_or_404(FilePost,pk = pk)
+    if request.method == 'POST':
+        share_form = FileShareForm(request.POST,request.FILES)
+
+        print("inside post")
+        user = request.POST['user']
+        user_instance = get_object_or_404(CustomUser, pk= user)
+        print(user,"-------Inside post---------")
+ 
+        if share_form.is_valid():
+            print("Inside form valid")
+            instance = share_form.save(commit=False)
+            instance.file = file_instance
+            instance.user = user_instance
+            instance.status = True
+            instance.save()
+            return redirect('files:home')
+
+    context = {
+        'form':share_form,
+        'file_instance':file_instance
+    }
+    return render(request, 'files/shared_files/file_share.html', context)
+
+
+def user_share_file_list(request):
+    files = ShareFile.objects.filter(user__pk = request.user.id)
+    print(files)
+    context = {
+        'files':files
+    }
+    return render(request, 'files/shared_files/user_file_list.html', context)

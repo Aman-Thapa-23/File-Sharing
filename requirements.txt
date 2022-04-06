@@ -1,6 +1,8 @@
 asgiref==3.5.0
 Django==4.0.3
 django-crispy-forms==1.14.0
+django-material==1.10.0
+django-material-admin==1.8.6
 Pillow==9.0.1
 psycopg2==2.9.3
 python-decouple==3.6

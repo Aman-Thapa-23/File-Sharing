@@ -34,7 +34,8 @@
         <thead>
           <tr>
             <th>File Name</th>
-            <th>Uploaded Date</th>
+            <th>Shared Date</th>
+            <th>Shared By</th>
             <th>View</th>
             <th>Download</th>
             <th></th>
@@ -43,15 +44,13 @@
           </tr>
         </thead>
         <tbody>
-          {% for file in page_obj %}
+          {% for share_file in files %}
           <tr>
-            <td>{{ file.title }}</td>
-            <td>{{ file.uploaded_at|date:"N d, Y" }}</td>
-            <td><a href="{{ file.file_upload.url }}" class="btn btn-warning"><i class="fa fa-eye" aria-hidden="true"></i></a></td>
-            <td><a href="{{ file.file_upload.url }}" class="btn btn-info mx-4" download><i class="fa fa-download" aria-hidden="true"></i></a></td>
-            <td><a href="{% url 'files:update-file' file.id %}" class="btn btn-secondary btn-sm"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
-            <td><a href="{% url 'files:delete-file' file.id %}" class="btn btn-danger btn-sm"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
-            <td><a href="{% url 'files:share-file' file.id %}" class="btn btn-primary btn-sm">Share</a></td>
+            <td>{{ share_file.file.title }}</td>
+            <td>{{ share_file.shared_at|date:"N d, Y" }}</td>
+            <td>{{ share_file.file.user }}</td>
+            <td><a href="{{ share_file.file.file_upload.url }}" class="btn btn-warning"><i class="fa fa-eye" aria-hidden="true"></i></a></td>
+            <td><a href="{{ share_file.file.file_upload.url }}" class="btn btn-info mx-4" download><i class="fa fa-download" aria-hidden="true"></i></a></td>
           </tr>
           {% endfor %}
         </tbody>

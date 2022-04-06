@@ -28,7 +28,8 @@
           </div>
           <input type="submit" class="btn btn-block btn-primary submit-btn mt-2" style="width: 100%;" value="Login">
         </form>
-        <div class="container mt-4 ms-4">
+        <div class="container mt-4 ms-4" style="text-align: center;">
+          <span class="">Forgot password?<a href="{% url 'users:password-reset' %}">Reset here</a></span><br>
           <span class="">Don't have an account?<a href="{% url 'users:register' %}">Register here</a></span><br>
         </div>
       </div>

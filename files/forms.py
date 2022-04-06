@@ -1,5 +1,5 @@
 from django import forms
-from .models import FilePost
+from .models import FilePost,ShareFile
 
 class FileUploadForm(forms.ModelForm):
     class Meta:
@@ -10,3 +10,9 @@ class FileUploadForm(forms.ModelForm):
         super(FileUploadForm, self).__init__(*args, **kwargs)
         self.fields['file_upload'].label = False
         
+
+
+class FileShareForm(forms.ModelForm):
+    class Meta:
+        model = ShareFile
+        fields = ('user',)

@@ -13,4 +13,6 @@ urlpatterns = [
     path('<int:id>/update-file', FileUpdateView.as_view(), name='update-file'),
     path('<int:id>/delete-file', FileDeleteView.as_view(), name='delete-file'),
     path('search-files', csrf_exempt(FileSearch.as_view()), name='search-files'),
+    path('share-file/<pk>/', views.file_share, name='share-file'),
+    path('shared-files/', views.user_share_file_list, name='user-share-file-list'),
 ]
