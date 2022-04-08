@@ -10,7 +10,7 @@
           <li class="breadcrumb-item">
             <a href="{% url 'files:home' %}">Files</a>
           </li>
-          <li class="breadcrumb-item active" aria-current="page">My Files</li>
+          <li class="breadcrumb-item active" aria-current="page">Received Files</li>
         </ol>
       </nav>
     </div>
@@ -21,7 +21,11 @@
     {% if files.count %}
 
     <div class="row">
-      <div class="col-md-8"></div>
+      <div class="col-md-8">
+        <div class="mt-3">
+          <strong>Total received files: {{ page_obj.paginator.count }}</strong>
+        </div>
+      </div>
       <div class="col-md-4">
         <div class="mt-2">
           <input type="text" class="form-control" id="SearchField" placeholder="Search">
@@ -44,7 +48,7 @@
           </tr>
         </thead>
         <tbody>
-          {% for share_file in files %}
+          {% for share_file in page_obj %}
           <tr>
             <td>{{ share_file.file.title }}</td>
             <td>{{ share_file.shared_at|date:"N d, Y" }}</td>

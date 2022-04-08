@@ -35,10 +35,16 @@ function SearchValue(event) {
         } else {
           noResults.style.display = "none";
           data.forEach((item) => {
+            console.log('item', item.file_upload.url );
             tableOutputBody.innerHTML += `
+              
                   <tr>
                     <td>${item.title}</td>
-                    <td>${item.date}</td>
+                    <td>${item.uploaded_at}</td>
+                    <td>${item.file_upload.url}</td>
+                    <td>${item.file_upload.url}</td>
+                    <td></td>
+                    <td></td>
                   </tr>
                   `;
           });

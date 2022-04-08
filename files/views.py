@@ -1,5 +1,3 @@
-from msilib.schema import CustomAction
-from urllib import request
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views import View
 from django.contrib.auth.decorators import login_required
@@ -13,19 +11,22 @@ from django.http import JsonResponse
 import json
 # Create your views here.
 
-
+login_required(login_url='/users/login')
 def index(requst):
     return render(requst, 'base.html')
 
+
+@method_decorator(login_required(login_url='/users/login'), name='dispatch')
 class FileSearch(View):
     def post(self, request):
         search_str = json.loads(request.body).get('searchText')
-        files = FilePost.objects.filter(title__startswith=search_str, user=request.user) | FilePost.objects.filter(
-            uploaded_at__startswith=search_str, user=request.user)
-        
-        data = files.values()
-  
-        return JsonResponse(list(data), safe=False)
+        if request.user:
+            files = FilePost.objects.filter(title__icontains=search_str) | FilePost.objects.filter(
+                uploaded_at__startswith=search_str)
+
+            data = files.values()
+    
+            return JsonResponse(list(data), safe=False)
 
 @method_decorator(login_required(login_url='/users/login'), name='dispatch')
 class FileListView(View):
@@ -69,6 +70,8 @@ class UploadFileView(View):
 
         return render(request, 'files/my_files/add_file.html')
 
+
+@method_decorator(login_required(login_url='/users/login'), name='dispatch')
 class FileUpdateView(View):
     def get(self, request, id):
         file = FilePost.objects.get(pk=id)
@@ -89,7 +92,14 @@ class FileUpdateView(View):
 
         return render(request, 'files/my_files/file_update.html', context)
 
+
+@method_decorator(login_required(login_url='/users/login'), name='dispatch')
 class FileDeleteView(View):
+    def get(self, request, id):
+        file = get_object_or_404(FilePost, pk=id)
+        context = {'file': file}
+        return render(request, 'files/my_files/file_delete.html', context)
+
     def post(self, request, id):
         file = get_object_or_404(FilePost, pk=id)
         context = {'file': file}
@@ -97,23 +107,19 @@ class FileDeleteView(View):
             file.delete()
             messages.success(request, 'File is successfully deleted')
             return redirect('files:home')
-        return render(request, 'files/my_files/file_delete..html', context)
+        return render(request, 'files/my_files/file_delete.html', context)
 
 
+login_required(login_url='/users/login')
 def file_share(request,pk):
-    print("Inside file share")
     share_form = FileShareForm()
     file_instance = get_object_or_404(FilePost,pk = pk)
     if request.method == 'POST':
         share_form = FileShareForm(request.POST,request.FILES)
-
-        print("inside post")
         user = request.POST['user']
         user_instance = get_object_or_404(CustomUser, pk= user)
-        print(user,"-------Inside post---------")
- 
+       
         if share_form.is_valid():
-            print("Inside form valid")
             instance = share_form.save(commit=False)
             instance.file = file_instance
             instance.user = user_instance
@@ -128,10 +134,20 @@ def file_share(request,pk):
     return render(request, 'files/shared_files/file_share.html', context)
 
 
+login_required(login_url='/users/login')
 def user_share_file_list(request):
     files = ShareFile.objects.filter(user__pk = request.user.id)
-    print(files)
-    context = {
-        'files':files
-    }
+    paginator = Paginator(files, 7)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    context = {'files': files, 'page_obj':page_obj }
     return render(request, 'files/shared_files/user_file_list.html', context)
+
+login_required(login_url='/users/login')
+def my_shared_files_list(request):
+    files = ShareFile.objects.filter(status = True)
+    paginator = Paginator(files, 7)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    context = {'files': files, 'page_obj':page_obj }
+    return render(request, 'files/shared_files/my_shared_files.html', context)

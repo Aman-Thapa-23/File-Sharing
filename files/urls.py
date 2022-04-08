@@ -14,5 +14,6 @@ urlpatterns = [
     path('<int:id>/delete-file', FileDeleteView.as_view(), name='delete-file'),
     path('search-files', csrf_exempt(FileSearch.as_view()), name='search-files'),
     path('share-file/<pk>/', views.file_share, name='share-file'),
-    path('shared-files/', views.user_share_file_list, name='user-share-file-list'),
+    path('received-files/', views.user_share_file_list, name='user-share-file-list'),
+    path('my-shared-files/', views.my_shared_files_list, name='my-shared-files')
 ]

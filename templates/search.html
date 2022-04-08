@@ -1,0 +1,97 @@
+{% extends 'base_auth_user.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-12" style="background-color: lightgray;">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="{% url 'files:home' %}">Files</a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">search File</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+    <div class="container">
+        {% include 'partials/messages.html' %}
+        {% if files.count %}
+
+        <div class="app-table">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>File Name</th>
+                        <th>Uploaded Date</th>
+                        <th>View</th>
+                        <th>Download</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <h3>Search results:</h3>
+                    {% if page_obj|length < 1 %} <p>No any results found</p>
+
+                        Your search - <b>{{ search_str }}</b> - did not match any documents
+                        Suggestions:
+                        <ul>
+                            <li>Make sure that all words are spelled correctly.</li>
+                            <li>Try different keywords.</li>
+                            <li>Try more general keywords.</li>
+                            <li>Try fewer keywords.</li>
+                        </ul>
+
+
+                        {% endif %}
+                        {% for file in page_obj %}
+                        <tr>
+                            <td>{{ file.title }}</td>
+                            <td>{{ file.uploaded_at|date:"N d, Y" }}</td>
+                            <td><a href="{{ file.file_upload.url }}" class="btn btn-warning"><i class="fa fa-eye"
+                                        aria-hidden="true"></i></a></td>
+                            <td><a href="{{ file.file_upload.url }}" class="btn btn-info mx-4" download><i
+                                        class="fa fa-download" aria-hidden="true"></i></a></td>
+                            <td><a href="{% url 'files:update-file' file.id %}" class="btn btn-secondary btn-sm"><i
+                                        class="fa fa-pencil" aria-hidden="true"></i></a></td>
+                            <td><a href="{% url 'files:delete-file' file.id %}" class="btn btn-danger btn-sm"><i
+                                        class="fa fa-trash" aria-hidden="true"></i></a></td>
+                            <td><a href="{% url 'files:share-file' file.id %}" class="btn btn-primary btn-sm">Share</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+
+        <div class="pagination-container">
+            <div class="">
+                Showing page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+            </div>
+
+            <ul class="pagination float-end me-auto">
+                {% if page_obj.has_previous %}
+                <li {% if page_obj.number==1 %} class="page-item active" {% endif %}><a class="page-link"
+                        href="?page=1">&laquo;
+                        1</a></li>
+                <li class="page-item"><a class="page-link"
+                        href="?page ={{ page_obj.previous_page_number }}">Previous</a></li>
+                {% endif %}
+
+                {% if page_obj.has_next %}
+                <li class="page-item"> <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a></li>
+                <li class="page-item"> <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">{{
+                        page_obj.paginator.num_pages }} &raquo;</a></li>
+                {% endif %}
+            </ul>
+
+            {% endif %}
+        </div>
+    </div>
+    <script src="{% static 'js/searchFile.js' %}"></script>
+    {% endblock content %}
