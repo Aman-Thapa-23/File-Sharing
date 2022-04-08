@@ -17,7 +17,10 @@
       <form  method="POST" enctype="multipart/form-data">
         {% include 'partials/messages.html' %}
         {% csrf_token %}
-        {{ form|crispy }}
+        <div class="mb-3">
+          <label for="">Select user email</label>
+          <div class="mt-2">{{ form.user|as_crispy_field }}</div>
+        </div>
         <button type = "submit" class="btn btn-info mt-2">Share to user</button>
       </form>
     </div>

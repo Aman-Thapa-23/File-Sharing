@@ -16,3 +16,7 @@ class FileShareForm(forms.ModelForm):
     class Meta:
         model = ShareFile
         fields = ('user',)
+    
+    def __init__(self, *args, **kwargs):
+        super(FileShareForm, self).__init__(*args, **kwargs)
+        self.fields['user'].label = False
