@@ -75,11 +75,11 @@ class Profile(models.Model):
     def __str__(self):
         return f'{self.user.first_name} {self.user.last_name} Profile'
 
-    def save(self, *args, **kwargs):        #When you are overriding model's save method in Django, 
-        super(Profile, self).save(*args, **kwargs) #you should also pass *args and **kwargs #to overridden method.
-        img =  Image.open(self.image.path)  
+    # def save(self, *args, **kwargs):        #When you are overriding model's save method in Django, 
+    #     super(Profile, self).save(*args, **kwargs) #you should also pass *args and **kwargs #to overridden method.
+    #     img =  Image.open(self.image.path)  
                     
-        if img.height > 300 or img.width > 300:
-            output_size = (300, 300)
-            img.thumbnail(output_size)
-            img.save(self.image.path)
+    #     if img.height > 300 or img.width > 300:
+    #         output_size = (300, 300)
+    #         img.thumbnail(output_size)
+    #         img.save(self.image.path)
