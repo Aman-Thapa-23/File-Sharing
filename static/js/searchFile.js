@@ -40,7 +40,7 @@ function SearchValue(event) {
               
                   <tr>
                     <td>${item.title}</td>
-                    <td>${item.uploaded_at}</td>
+                    <td>${item.uploaded_at.date}</td>
                     <td>${item.file_upload.url}</td>
                     <td>${item.file_upload.url}</td>
                     <td></td>

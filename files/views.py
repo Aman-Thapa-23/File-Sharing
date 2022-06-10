@@ -1,3 +1,5 @@
+from multiprocessing import context
+from turtle import title
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views import View
 from django.contrib.auth.decorators import login_required
@@ -11,22 +13,33 @@ from django.http import JsonResponse
 import json
 # Create your views here.
 
-login_required(login_url='/users/login')
 def index(requst):
     return render(requst, 'base.html')
 
 
 @method_decorator(login_required(login_url='/users/login'), name='dispatch')
 class FileSearch(View):
-    def post(self, request):
-        search_str = json.loads(request.body).get('searchText')
+    def get(self, request):
+        search_str = request.GET['searchText']
         if request.user:
-            files = FilePost.objects.filter(title__icontains=search_str) | FilePost.objects.filter(
-                uploaded_at__startswith=search_str)
+            files = FilePost.objects.filter(title__icontains=search_str) | FilePost.objects.filter(uploaded_at__startswith=search_str)
+            paginator = Paginator(files, 7)
+            page_number = request.GET.get('page')
+            page_obj = paginator.get_page(page_number)
+            
+            context = {'files':files, 'page_obj':page_obj} 
+            return render(request, 'files/searchFile.html', context)
 
-            data = files.values()
+    # def post(self, request):
+    #     search_str = json.loads(request.body).get('searchText')
+    #     if request.user:
+    #         files = FilePost.objects.filter(title__icontains=search_str) | FilePost.objects.filter(
+    #             uploaded_at__startswith=search_str)
+
+    #         data = files.values()
     
-            return JsonResponse(list(data), safe=False)
+    #         return JsonResponse(list(data), safe=False)
+    
 
 @method_decorator(login_required(login_url='/users/login'), name='dispatch')
 class FileListView(View):

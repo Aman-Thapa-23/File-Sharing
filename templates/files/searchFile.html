@@ -10,7 +10,7 @@
           <li class="breadcrumb-item">
             <a href="{% url 'files:home' %}">Files</a>
           </li>
-          <li class="breadcrumb-item active" aria-current="page">My Files</li>
+          <li class="breadcrumb-item active" aria-current="page">Search Files</li>
         </ol>
       </nav>
     </div>
@@ -23,22 +23,20 @@
     <div class="row">
       <div class="col-md-8">
         <div class="mt-3">
-          <strong>Total files: {{ page_obj.paginator.count }}</strong>
+            {% if files|length < 1 %}
+            <p>No any results found</p>
+        
+            Your search - <b>{{searchText}}</b> - did not match any documents
+            Suggestions:
+            <ul>
+              <li>Make sure that all words are spelled correctly.</li>
+              <li>Try different keywords.</li>
+              <li>Try more general keywords.</li>
+              <li>Try fewer keywords.</li>
+            </ul>
         </div>
       </div>
       <div class="col-md-4">
-        <div class="mt-2">
-          <form action="" method="get">
-            <div class="row">
-              <div class="col-sm-6">
-                <input name="searchText" type="text" class="form-control" id="SearchField" placeholder="Search">
-              </div>
-              <div class="col-sm-6">
-                <button class="btn btn-primary d-inline-block" type="submit">Search</button>
-              </div>
-            </div>
-          </form>
-        </div>
       </div>
     </div>
 
@@ -105,13 +103,13 @@
 
       <ul class="pagination float-end me-auto">
         {% if page_obj.has_previous %}
-        <li {% if page_obj.number is 1 %} class="page-item active" {% endif %}><a class="page-link" href="?page=1">&laquo;1</a></li>
+        <li {% if page_obj.number == 1 %} class="page-item active" {% endif %}><a class="page-link" href="?page=1">&laquo; 1</a></li>
         <li class="page-item"><a class="page-link" href="?page ={{ page_obj.previous_page_number }}">Previous</a></li>
         {% endif %}
 
         {% if page_obj.has_next %}
         <li class="page-item"> <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a></li>
-        <li class="page-item"> <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">{{page_obj.paginator.num_pages }} &raquo;</a></li>
+        <li class="page-item"> <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }} &raquo;</a></li>
         {% endif %}
       </ul>
 
@@ -119,4 +117,4 @@
     </div>
   </div>
   <script src="{% static 'js/searchFile.js' %}"></script>
-  {% endblock content %}
+  {% endblock content %}    
